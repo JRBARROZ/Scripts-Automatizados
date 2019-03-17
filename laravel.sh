@@ -2,8 +2,9 @@
 #Shell Script de instalação do laravel!
 #Criado  28/03/2019
 #By: Jhonatas Rodrigues de Barros
+declare -A CORES
 echo ""
-echo "
+echo -e "${CORES['WHITE']}
 
 ░░░░░░░░░░░░░░░░░░░░
 ░░░█░░░█░░░░█░░░█░░░
@@ -24,12 +25,20 @@ echo "
 "
 
 
-
+CORES=(
+	["WHITE"]='\033[01;39m'
+	["YELLOW"]='\033[01;33m'
+	["GREEN"]='\033[01;32m'
+	["RED"]='\033[01;31m
+'
+)
+${LOG}
+LOG= | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log 
 whoami=" Se não souber seu usuário utilize o comando (whoami), antes de prosseguir."
 
 #Pegando nome do usuário
 
-echo -e "\033[01;33mOlá, Para Prosseguir Informe o Seu usuário.\033[01;36m$whoami"
+echo -e "${CORES['GREEN']}Olá, Para Prosseguir Informe o Seu usuário.${CORES['YELLOW']}$whoami"
 read -p  "Usuário: " USER
 
 if [ /home/$USER == $HOME ]; then
@@ -39,94 +48,93 @@ if [ /home/$USER == $HOME ]; then
 	if [ ! -d /home/$USER/Área\ de\ Trabalho/Log ]; then
 		cd /home/$USER/Área\ de\ Trabalho && mkdir Log && cd Log && touch Laravel.log
 		else
-			echo -e "\033[01;34mDiretório de Log já existe! :)"
+			echo -e "${CORES['RED']}Diretório de Log já existe! :)"
 	fi
 
 	#Instalando o composer
 
-	echo"" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m======================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;33mInstalando o composer" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m======================\033[01;33m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	echo "" ${LOG}
+	echo -e "${CORES['WHITE']}======================" ${LOG}
+	echo -e "${CORES[GREEN]} Instalando o composer" ${LOG}
+	echo -e "${CORES['WHITE']}======================${CORES['WHITE']}" ${LOG}
+	echo "" ${LOG}
 
-
+	echo -e "${CORES['YELLOW']}"
 	sudo apt-get install composer -y
-	sudo chown -R $USER:$USER .composer/composer.json | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log  
+	sudo chown -R $USER:$USER .composer/composer.json ${LOG}  
 
 	#começando a instalação das depedencias
 
-	echo -e "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m==============================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;33mInstalando Laravel Dependences" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m==============================\033[01;33m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	echo -e "" ${LOG}
+	echo -e "${CORES['WHITE']}==============================" ${LOG}
+	echo -e "${CORES['GREEN']}Instalando Laravel Dependences" ${LOG}
+	echo -e "${CORES['WHITE']}==============================${CORES['WHITE']}" ${LOG}
+	echo "" ${LOG}
 
 	#Interessante, aqui é um exemplo de exibição do comando na tela e registrando log.
 	#O comando instala todas as depedencias necessárias para a (INSTALAÇÃO DO LARAVEL)
-
-	sudo apt-get install php7.* | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	sudo apt-get install php-common php-mbstring php-xml php-zip | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log 
+	echo -e "${CORES['YELLOW']}"
+	sudo apt-get install php7.* ${LOG}
+	sudo apt-get install php-common php-mbstring php-xml php-zip ${LOG} 
 
 	echo ""
-	echo -e "\033[01;36m====================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;33mInstalando O Laravel" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m====================\033[01;33m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	echo -e "${CORES['WHITE']}====================" ${LOG}
+	echo -e "${CORES['GREEN']}Instalando O Laravel" ${LOG}
+	echo -e "${CORES['WHITE']}====================${CORES['WHITE']}" ${LOG}
 	echo ""
 
 	#Instalando o laravel, FINALMENTE!
-	composer global require laravel/installer | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	composer global require laravel/installer ${LOG}
 
-	echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m=========================================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;33mExecutando Instalações do Laravel no PATH" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m=========================================\033[01;32m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	echo "" ${LOG}
+	echo -e "${CORES['WHITE']}=========================================" ${LOG}
+	echo -e "${CORES['GREEN']}Executando Instalações do Laravel no PATH" ${LOG}
+	echo -e "${CORES['WHITE']}=========================================" ${LOG}
+	echo "" ${LOG}
 
 	#Habilitando os comandos do laravel via desktop!
-
-	$HOME/.config/composer/vendor/bin/laravel new blog | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	$HOME/.config/composer/vendor/bin/laravel new blog ${LOG}
 
 	#Limpando Cache do composer
 
-	echo"" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m===========================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;33mLimpando Cache" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-	echo -e "\033[01;36m===========================\033[01;32m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+	echo -e "" ${LOG}
+	echo -e "${CORES['WHITE']}===========================" ${LOG}
+	echo -e "${CORES['GREEN']}Limpando Cache" ${LOG}
+	echo -e "${CORES['WHITE']}===========================" ${LOG}
 	echo ""
 
-	if [ /home/$USER/cache/ ]; then
-		sudo chown -R $USER /home/$USER/.composer/cache/repo/https---packagist.org | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log 
+	if [ ! -d /home/$USER/cache/ ]; then
+		echo "${CORES['RED']}Não existe Arquivo de Cache :)"
+	else
+		sudo chown -R $USER /home/$USER/.composer/cache/repo/https---packagist.org ${LOG} 
 		sudo chown -R $USER /home/$USER/.composer/cache/files/ 
 		echo "Cache Limpo com sucesso!"
-	else
-		echo "\033[01;36mNão existe Arquivo de Cache :)"
 	fi
 
 	#Criando primeiro projeto Laravel
 	read -p "Você deseja criar seu primeiro projeto agora? [y/n] :" RESPOSTA
 	if [ "$RESPOSTA" == "y" ]; then
 		clear
-		echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-		echo -e "\033[01;36m=======================================" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-		echo -e "\033[01;33mCriando Primeiro Projeto" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-		echo -e "\033[01;36m=======================================\033[01;32m" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
-		echo "" | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+		echo "" ${LOG}
+		echo -e "${CORES['WHITE']}=======================================" ${LOG}
+		echo -e "${CORES['GREEN']}Criando Primeiro Projeto" ${LOG}
+		echo -e "${CORES['WHITE']}=======================================\033[01;32m" ${LOG}
+		echo "" ${LOG}
 
-		echo -e "\033[01;33mPara criar seu primeiro projeto, é necessário um nome. \033[01;36mDigite o nome do seu projeto piloto\033[01;33m: "
+		echo -e "${CORES['WHITE']}Para criar seu primeiro projeto, é necessário um nome. ${CORES['WHITE']}Digite o nome do seu projeto piloto${CORES['WHITE']}: "
 		read -p "Nome do Projeto: " PROJETO
 
 		cd /home/$USER/Área\ de\ Trabalho/ && mkdir Laravel-Projects
 
-		composer create-project laravel/laravel /home/$USER/Área\ de\ Trabalho/Laravel-Projects/$PROJETO --prefer-dist | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log
+		composer create-project laravel/laravel /home/$USER/Área\ de\ Trabalho/Laravel-Projects/$PROJETO --prefer-dist ${LOG}
 		echo ""
-		echo -e "\033[01;33m==================================================================================================================================="
+		echo -e "${CORES['WHITE']}==================================================================================================================================="
 		echo ""
-		echo -e "\033[01;33mParabéns, \033[01;36mseu projeto foi criado na pasta \033[01;33m/home/$USER/Área\ de\ Trabalho/Laravel-Projects/$PROJETO"
+		echo -e "${CORES['GREEN']}Parabéns, ${CORES['WHITE']}seu projeto foi criado na pasta ${CORES['RED']}/home/$USER/Área\ de\ Trabalho/Laravel-Projects/$PROJETO"
 		echo ""
-		echo -e "\033[01;36m Qual quer dúvida ou bug, mande um email para:\033[01;33m jhonsnoow32@gmail.com :)"
+		echo -e "${CORES['YELLOW']} Qual quer dúvida ou bug, mande um email para:${CORES['RED']} jhonsnoow32@gmail.com :)"
 		echo ""
-		echo -e "\033[01;33m=================================================================================================================================== "
+		echo -e "${CORES['WHITE']}=================================================================================================================================== "
 		read -p "Você deseja startar o servidor agora? [y/n] : " STARTAR
 		if [[ ${STARTAR} == "y" ]]; then
 			cd /home/$USER/Área\ de\ Trabalho/Laravel-Projects/$PROJETO/
@@ -138,14 +146,14 @@ if [ /home/$USER == $HOME ]; then
 	else
 		clear
 		echo ""
-		echo -e "\033[01;33m==================================================================================================================================="
+		echo -e "${CORES['WHITE']}==================================================================================================================================="
 		echo ""
-		echo -e "\033[01;33mParabéns, Laravel Instalado com sucesso :)"
+		echo -e "${CORES['GREEN']}Parabéns, Laravel Instalado com sucesso :)"
 		echo ""
-		echo -e "\033[01;36m Qual quer dúvida ou bug, mande um email para:\033[01;33m jhonsnoow32@gmail.com :)"
+		echo -e "${CORES['YELLOW']} Qual quer dúvida ou bug, mande um email para:${CORES['WHITE']} jhonsnoow32@gmail.com :)"
 		echo ""
-		echo -e "\033[01;33m=================================================================================================================================== "	
+		echo -e "${CORES['WHITE']}=================================================================================================================================== "	
 	fi
 else
-	echo -e "\033[01;33mOps, parece que esse usuário não existe no sistema."
+	echo -e "${CORES['RED']}Ops, parece que esse usuário não existe no sistema."
 fi
