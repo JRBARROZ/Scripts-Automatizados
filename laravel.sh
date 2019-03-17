@@ -36,7 +36,7 @@ if [ /home/$USER == $HOME ]; then
 	
 #Criando arquivo para log
 
-	if [ ! /home/$USER/Área\ de\ Trabalho/Log ]; then
+	if [ ! -d /home/$USER/Área\ de\ Trabalho/Log ]; then
 		cd /home/$USER/Área\ de\ Trabalho && mkdir Log && cd Log && touch Laravel.log
 		else
 			echo -e "\033[01;34mDiretório de Log já existe! :)"
