@@ -32,14 +32,8 @@ CORES=(
 	["RED"]='\033[01;31m
 '
 )
-${LOG}
 LOG= | tee /home/$USER/Área\ de\ Trabalho/Log/Laravel.log 
-whoami=" Se não souber seu usuário utilize o comando (whoami), antes de prosseguir."
-
 #Pegando nome do usuário
-
-echo -e "${CORES['GREEN']}Olá, Para Prosseguir Informe o Seu usuário.${CORES['YELLOW']}$whoami"
-read -p  "Usuário: " USER
 
 if [ /home/$USER == $HOME ]; then
 	
@@ -65,7 +59,7 @@ if [ /home/$USER == $HOME ]; then
 
 	#começando a instalação das depedencias
 
-	echo -e "" ${LOG}
+	echo "" ${LOG}
 	echo -e "${CORES['WHITE']}==============================" ${LOG}
 	echo -e "${CORES['GREEN']}Instalando Laravel Dependences" ${LOG}
 	echo -e "${CORES['WHITE']}==============================${CORES['WHITE']}" ${LOG}
